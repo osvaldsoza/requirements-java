@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+//import './App.css';
+import Todo from './Todo';
+import TodoForm from './TodoForm';
 
 function App() {
+  const [todos, setTodos] = useState([
+    { text: "JPA" ,isLearned:false},
+    { text: "JSF",isLearned:false },
+    { text: "Servlet" ,isLearned:false}
+  ])
+
+  const addTodo = text => {
+    const newTodos = [...todos,{text}]
+    setTodos(newTodos)
+  }
+  const learned = index =>{
+    const newTodos = [...todos]
+    newTodos[index].isLearned = true;
+    setTodos(newTodos)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h2><span className="badge badge-dark">Requirements Java Developer</span></h2>
+      {
+        todos.map((todo, index) => (
+          <Todo
+            key={index}  
+            index={index}         
+            todo={todo}
+            learned={learned}
+          />
+        ))
+      }
+      <TodoForm addTodo={addTodo}/>
     </div>
   );
 }
